@@ -40,7 +40,6 @@ optimize = """docker run --rm -v "$(pwd)":/code \
 
 [dependencies]
 cosmwasm-schema = "1.2.0"
-cosmwasm-std = "1.2.0"
 cosmwasm-storage = "1.2.0"
 cw-storage-plus = "1.0.1"
 cw2 = "1.0.1"
@@ -48,7 +47,8 @@ cw20 = "1.0.1"
 schemars = "0.8.10"
 serde = { version = "1.0.145", default-features = false, features = ["derive"] }
 thiserror = { version = "1.0.31" }
-oraidex = {path = "../../packages/oraidex"}
+cosmos-sdk-proto = {path = "../../packages/cosmos-sdk-proto"}
+cosmwasm-std = {version = "1.2.0", features = ["stargate", "staking"]}
 
 [dev-dependencies]
 cw-multi-test = "0.16.2"

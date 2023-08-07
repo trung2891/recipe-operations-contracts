@@ -918,6 +918,7 @@ dependencies = [
 name = "theta-operations"
 version = "0.1.0"
 dependencies = [
+ "cosmos-sdk-proto",
  "cosmwasm-schema",
  "cosmwasm-std",
  "cosmwasm-storage",
@@ -925,7 +926,6 @@ dependencies = [
  "cw-storage-plus",
  "cw2",
  "cw20",
- "oraidex",
  "schemars",
  "serde",
  "thiserror",
