@@ -1,9 +1,9 @@
 use cosmos_sdk_proto::{
     cosmos::base::v1beta1::Coin as ProtoCoin,
     cosmos::staking::v1beta1::MsgDelegate,
-    ibc::{
-        self,
-        applications::{interchain_accounts::v1::MsgSubmitTx, transfer::v1::MsgTransfer},
+    ibc::applications::{
+        interchain_accounts::v1::{MsgRegisterAccount, MsgSubmitTx},
+        transfer::v1::MsgTransfer,
     },
     traits::{MessageExt, TypeUrl},
     Any,
@@ -11,6 +11,24 @@ use cosmos_sdk_proto::{
 use cosmwasm_std::{Coin, CosmosMsg, Deps, Env, IbcMsg, IbcTimeout, StdResult, Timestamp, Uint128};
 
 use crate::state::CONFIG;
+
+pub fn query_register_interchain_account_msg(
+    deps: Deps,
+    executor_addr: String,
+) -> StdResult<Vec<CosmosMsg>> {
+    let config = CONFIG.load(deps.storage)?;
+
+    let tx = MsgRegisterAccount {
+        owner: executor_addr,
+        connection_id: config.ica_connection_id,
+        version: "".to_string(),
+    };
+
+    Ok(vec![CosmosMsg::Stargate {
+        type_url: MsgRegisterAccount::TYPE_URL.to_string(),
+        value: tx.to_bytes().unwrap().into(),
+    }])
+}
 
 pub fn query_transfer_to_host_chain_msg(
     deps: Deps,

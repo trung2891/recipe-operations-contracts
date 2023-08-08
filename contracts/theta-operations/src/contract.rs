@@ -7,8 +7,8 @@ use cosmwasm_std::{
 use crate::{
     error::ContractError,
     ica::{
-        query_delegate_on_host_chain, query_transfer_from_host_chain_msg,
-        query_transfer_to_host_chain_msg,
+        query_delegate_on_host_chain, query_register_interchain_account_msg,
+        query_transfer_from_host_chain_msg, query_transfer_to_host_chain_msg,
     },
     msg::{ConfigResponse, ExecuteMsg, IcaOperations, InstantiateMsg, MigrateMsg, QueryMsg},
     state::{Config, CONFIG},
@@ -128,6 +128,9 @@ pub fn query(deps: Deps, env: Env, msg: QueryMsg) -> StdResult<Binary> {
                 denom,
                 amount,
             )?),
+            Ok(IcaOperations::RegisterInterchainAccount { executor_addr }) => {
+                to_binary(&query_register_interchain_account_msg(deps, executor_addr)?)
+            }
             _ => Err(cosmwasm_std::StdError::NotFound {
                 kind: "Operations not found".to_string(),
             }),

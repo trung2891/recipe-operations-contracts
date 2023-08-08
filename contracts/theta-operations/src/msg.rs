@@ -63,4 +63,7 @@ pub enum IcaOperations {
         denom: String,
         amount: Uint128,
     },
+    RegisterInterchainAccount {
+        executor_addr: String,
+    },
 }
